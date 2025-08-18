@@ -1,0 +1,29 @@
+name: monero-pool
+
+services:
+  backend:
+    extra_hosts:
+    - "github.com:140.82.121.3"
+    - "codeload.github.com:140.82.121.3"
+    build:
+      context: .
+    ports:
+      - 8888:8000
+      - 8881:8001
+      - 4444:3333
+      - 5555:5555
+      - 7777:7777
+    volumes:
+    - ./config.json:/src/pool/config.json
+    depends_on:
+    - database
+  database:
+    image: mariadb:11
+    environment:
+      MARIADB_ROOT_PASSWORD: "development"
+      MARIADB_USER: "ocean"
+      MARIADB_PASSWORD: "development"
+      MARIADB_DATABASE: "pool"
+    volumes:
+    - ./data/mariadb:/var/lib/mysql
+    - ./deployment/base.sql:/docker-entrypoint-initdb.d/base.sql
