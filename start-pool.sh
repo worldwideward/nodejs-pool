@@ -5,6 +5,8 @@ export PATH=$PATH:/src/pool/node_modules/.bin
 DATE_FORMAT="YYYY-MM-DD HH:mm:ss:SSS Z"
 TIMEOUT="10000"
 
+sleep 10 # watch for the database to come online
+
 #pm2 start /src/monero/build/release/bin/monero-wallet-rpc -- \
 #	--rpc-bind-port 18082 \
 #	--password-file /home/node/wallets/wallet_pass \
@@ -53,4 +55,4 @@ pm2 start init.js --name=pool \
 	--log-date-format="$DATE_FORMAT" -- \
 	--module=pool
 
-pm2 logs
+pm2 logs api
