@@ -14,7 +14,9 @@ services:
       - 5555:5555
       - 7777:7777
     volumes:
-    - ./config.json:/src/pool/config.json
+    - ./config.json:/opt/config.json
+    - ./lib:/src/pool/lib
+    - ./init.js:/src/pool/init.js
     depends_on:
     - database
   database:
@@ -27,3 +29,4 @@ services:
     volumes:
     - ./data/mariadb:/var/lib/mysql
     - ./deployment/base.sql:/docker-entrypoint-initdb.d/base.sql
+    - ./deployment/config.sql:/docker-entrypoint-initdb.d/config.sql
