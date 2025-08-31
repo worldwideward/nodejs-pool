@@ -42,6 +42,8 @@ global.mysql.query("SELECT * FROM config").then(function (rows) {
         }
     });
 }).then(function(){
+
+
     global.config['coin'] = JSON.parse(coinConfig)[global.config.coin];
     coinInc = require(global.config.coin.funcFile);
     global.coinFuncs = new coinInc();
