@@ -13,5 +13,9 @@
     "database": "pool",
     "user": "pool",
     "password": "98erhfiuehw987fh23d"
-  }
+  },
+  "debugging": false,
+  "monero_developers_address": "abc",
+  "pool_developers_address": "abc",
+  "pool_wallet_address": "42Yum..."
 }
