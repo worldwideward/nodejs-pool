@@ -43,17 +43,18 @@ global.mysql.query("SELECT * FROM config").then(function (rows) {
     });
 }).then(function(){
 
-
     global.config['coin'] = JSON.parse(coinConfig)[global.config.coin];
     coinInc = require(global.config.coin.funcFile);
     global.coinFuncs = new coinInc();
     if (argv.module === 'pool'){
         comms = require('./lib/remote_comms');
+    	global.database = new comms();
+	global.database.initEnv();
     } else {
-        comms = require('./lib/local_comms');
+        comms = require('./lib/lmdb');
+    	global.database = new comms();
+	global.database.initEnv();
     }
-    global.database = new comms();
-    global.database.initEnv();
     global.coinFuncs.blockedAddresses.push(global.config.pool.address);
     global.coinFuncs.blockedAddresses.push(global.config.payout.feeAddress);
     if (argv.hasOwnProperty('tool') && fs.existsSync('./tools/'+argv.tool+'.js')) {
@@ -76,7 +77,8 @@ global.mysql.query("SELECT * FROM config").then(function (rows) {
                         });
                     });
                 }).then(function(){
-                    require('./lib/pool.js');
+                    //require('./lib/pool.js');
+                    require('./lib/pool_daemon.js');
                 });
                 break;
             case 'blockManager':
